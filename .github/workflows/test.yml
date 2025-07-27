@@ -1,16 +1,18 @@
-name: Build and Scan
+name: Test Project
+
 on:
-  push:
   pull_request:
+    branches:
+      - main
+
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  test:
+    runs-on: ubuntu-latest
     steps:
-      - name: Check Out Code
-        uses: actions/checkout@v2
-      - name: Install Node.js 14.x
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
-      - name: Install Dependencies
-        run: npm clean-install
+          node-version: 20
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
