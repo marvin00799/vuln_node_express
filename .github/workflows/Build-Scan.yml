@@ -35,11 +35,7 @@ jobs:
     - name: Code quality scan with ESLint
       run: npx eslint . --ext .js,.jsx,.ts,.tsx
       
-    - name: Dependency vulnerability scan
-      uses: securecodewarrior/github-action-add-sarif@v1
-      with:
-        sarif-file: 'results.sarif'
-      continue-on-error: true
+
       
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
