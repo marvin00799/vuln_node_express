@@ -1,16 +1,29 @@
-name: Build and Scan
+name: Build and Security Scan
+
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
+
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  build-and-scan:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Check Out Code
-        uses: actions/checkout@v2
-      - name: Install Node.js 14.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-      - name: Install Dependencies
-        run: npm clean-install
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18' # Change based on your project
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Build
+      run: npm run build
+
+    - name: Run Security Scan (npm audit)
+      run: npm audit --audit-level=high
