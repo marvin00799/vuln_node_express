@@ -14,21 +14,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Node.js
+    - name: Set up Node.js 16 (for sqlite3 compatibility)
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '16'
 
-    - name: Install build dependencies for sqlite3
+    - name: Install OS build dependencies for sqlite3
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential python3 make g++
+        sudo apt-get install -y python3 make g++ libsqlite3-dev
+
+    - name: Clean npm cache
+      run: npm cache clean --force
 
     - name: Install Node.js dependencies
       run: npm install
 
-    - name: Run Build
+    - name: Run Build (optional)
       run: npm run build || echo "No build script found"
 
-    - name: Run Security Scan (npm audit)
-      run: npm audit --audit-level=high || true
+    - name: Run Security Scan
+      run: npm audit --audit-level=high || echo "Audit completed with issues"
