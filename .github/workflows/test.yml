@@ -1,6 +1,10 @@
 name: Node.js CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -11,4 +15,3 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - run: npm run build  # Assuming you have a "build" script
