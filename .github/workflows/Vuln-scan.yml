@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Current LTS version
+          node-version: '18' # Downgraded for sqlite3 compatibility
           cache: 'npm'
 
       - name: Install dependencies
@@ -39,7 +39,7 @@ jobs:
           args: --all-projects --detection-depth=6
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        continue-on-error: true # Must be after 'with' and 'env'
+        continue-on-error: true
 
       - name: OWASP Dependency-Check
         uses: dependency-check/Dependency-Check_Action@main
